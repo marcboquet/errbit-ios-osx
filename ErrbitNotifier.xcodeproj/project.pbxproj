@@ -17,19 +17,19 @@
 		6149B6EA1697CA3D007D5DF7 /* EBNotice.m in Sources */ = {isa = PBXBuildFile; fileRef = 6149B6DD1697CA3D007D5DF7 /* EBNotice.m */; };
 		6149B6EB1697CA3D007D5DF7 /* EBNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 6149B6E01697CA3D007D5DF7 /* EBNotifier.m */; };
 		6149B6EC1697CA3D007D5DF7 /* EBNotifierFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6149B6E31697CA3D007D5DF7 /* EBNotifierFunctions.m */; };
+		61BDFFD61697EB7F0021E4FC /* GCAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = 6149B6C91697CA3D007D5DF7 /* GCAlertView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		61BDFFD71697EB7F0021E4FC /* DDXMLElementAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 6149B6CD1697CA3D007D5DF7 /* DDXMLElementAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		61BDFFD81697EB7F0021E4FC /* NSString+DDXML.h in Headers */ = {isa = PBXBuildFile; fileRef = 6149B6D01697CA3D007D5DF7 /* NSString+DDXML.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		61BDFFD91697EB7F0021E4FC /* DDXML.h in Headers */ = {isa = PBXBuildFile; fileRef = 6149B6D21697CA3D007D5DF7 /* DDXML.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		61BDFFDA1697EB7F0021E4FC /* DDXMLDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 6149B6D31697CA3D007D5DF7 /* DDXMLDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		61BDFFDB1697EB7F0021E4FC /* DDXMLElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 6149B6D51697CA3D007D5DF7 /* DDXMLElement.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		61BDFFDC1697EB7F0021E4FC /* DDXMLNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 6149B6D71697CA3D007D5DF7 /* DDXMLNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		61BDFFDD1697EB7F0021E4FC /* EBNotice.h in Headers */ = {isa = PBXBuildFile; fileRef = 6149B6DC1697CA3D007D5DF7 /* EBNotice.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		61BDFFDE1697EB7F0021E4FC /* EBNotifier.h in Headers */ = {isa = PBXBuildFile; fileRef = 6149B6DF1697CA3D007D5DF7 /* EBNotifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		61BDFFDF1697EB7F0021E4FC /* EBNotifierDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 6149B6E11697CA3D007D5DF7 /* EBNotifierDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		61BDFFE01697EB7F0021E4FC /* EBNotifierFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 6149B6E21697CA3D007D5DF7 /* EBNotifierFunctions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		61BDFFE11697EB8C0021E4FC /* DDXMLPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 6149B6DA1697CA3D007D5DF7 /* DDXMLPrivate.h */; settings = {ATTRIBUTES = (Private, ); }; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		6149B6B51697CA1C007D5DF7 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "include/${PRODUCT_NAME}";
-			dstSubfolderSpec = 16;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		6149B6B71697CA1C007D5DF7 /* libErrbitNotifier.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libErrbitNotifier.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -184,6 +184,28 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		61BDFFD51697EB4A0021E4FC /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61BDFFD61697EB7F0021E4FC /* GCAlertView.h in Headers */,
+				61BDFFD71697EB7F0021E4FC /* DDXMLElementAdditions.h in Headers */,
+				61BDFFD81697EB7F0021E4FC /* NSString+DDXML.h in Headers */,
+				61BDFFD91697EB7F0021E4FC /* DDXML.h in Headers */,
+				61BDFFDA1697EB7F0021E4FC /* DDXMLDocument.h in Headers */,
+				61BDFFDB1697EB7F0021E4FC /* DDXMLElement.h in Headers */,
+				61BDFFDC1697EB7F0021E4FC /* DDXMLNode.h in Headers */,
+				61BDFFDD1697EB7F0021E4FC /* EBNotice.h in Headers */,
+				61BDFFDE1697EB7F0021E4FC /* EBNotifier.h in Headers */,
+				61BDFFDF1697EB7F0021E4FC /* EBNotifierDelegate.h in Headers */,
+				61BDFFE01697EB7F0021E4FC /* EBNotifierFunctions.h in Headers */,
+				61BDFFE11697EB8C0021E4FC /* DDXMLPrivate.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		6149B6B61697CA1C007D5DF7 /* ErrbitNotifier */ = {
 			isa = PBXNativeTarget;
@@ -191,7 +213,7 @@
 			buildPhases = (
 				6149B6B31697CA1C007D5DF7 /* Sources */,
 				6149B6B41697CA1C007D5DF7 /* Frameworks */,
-				6149B6B51697CA1C007D5DF7 /* CopyFiles */,
+				61BDFFD51697EB4A0021E4FC /* Headers */,
 			);
 			buildRules = (
 			);
@@ -309,8 +331,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ErrbitNotifier/ErrbitNotifier-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
+				PRIVATE_HEADERS_FOLDER_PATH = "../../Headers/errbit-ios/Private";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "../../Headers/errbit-ios";
 				SKIP_INSTALL = YES;
+				SYMROOT = "$(SRCROOT)/Build/Products";
 			};
 			name = Debug;
 		};
@@ -322,8 +347,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ErrbitNotifier/ErrbitNotifier-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
+				PRIVATE_HEADERS_FOLDER_PATH = "../../Headers/errbit-ios/Private";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "../../Headers/errbit-ios";
 				SKIP_INSTALL = YES;
+				SYMROOT = "$(SRCROOT)/Build/Products";
 			};
 			name = Release;
 		};
