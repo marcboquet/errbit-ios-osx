@@ -24,18 +24,10 @@
 
 #import <TargetConditionals.h>
 #import <SystemConfiguration/SystemConfiguration.h>
-#if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
-    #ifndef __IPHONE_4_0
-        #error This version of the Airbrake notifier requires iOS 4.0 or later
-    #endif
-#elif TARGET_OS_MAC
-#import <Cocoa/Cocoa.h>
-    #ifndef __MAC_10_7
-        #error This version of the Airbrake notifier requires Mac OS 10.6 or later
-    #endif
-#else
-    #error [Airbrake] unsupported platform
+
+#ifndef __IPHONE_4_0
+  #error This version of the Airbrake notifier requires iOS 6.0 or later
 #endif
 
 #import "EBNotifierDelegate.h"
@@ -94,16 +86,19 @@ extern NSString * const EBNotifierDidPostNoticesNotification;
  
  */
 + (void)startNotifierWithAPIKey:(NSString *)key
+                  serverAddress:(NSString *)server
                 environmentName:(NSString *)name
                          useSSL:(BOOL)useSSL
                        delegate:(id<EBNotifierDelegate>)delegate;
 + (void)startNotifierWithAPIKey:(NSString *)key
+                  serverAddress:(NSString *)server
                 environmentName:(NSString *)name
                          useSSL:(BOOL)useSSL
                        delegate:(id<EBNotifierDelegate>)delegate
         installExceptionHandler:(BOOL)exception
            installSignalHandler:(BOOL)signal;
 + (void)startNotifierWithAPIKey:(NSString *)key
+                  serverAddress:(NSString *)server
                 environmentName:(NSString *)name
                          useSSL:(BOOL)useSSL
                        delegate:(id<EBNotifierDelegate>)delegate

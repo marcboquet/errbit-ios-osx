@@ -30,13 +30,13 @@ typedef struct eb_signal_info_t {
 	// file name used for a signal notice
 	const char *notice_path;
     
-    // notice payload
-    unsigned long notice_payload_length;
-    void *notice_payload;
+  // notice payload
+  unsigned long notice_payload_length;
+  void *notice_payload;
     
-    // environment info
-    unsigned long user_data_length;
-    void *user_data;
+  // environment info
+  unsigned long user_data_length;
+  void *user_data;
 	
 } eb_signal_info_t;
 eb_signal_info_t eb_signal_info;

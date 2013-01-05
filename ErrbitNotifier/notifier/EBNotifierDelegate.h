@@ -71,7 +71,6 @@
  */
 - (void)notifierDidLogException:(NSException *)exception;
 
-#if TARGET_OS_IPHONE
 /*
  
  Asks the delegate to return the root view controller for the app. This is used
@@ -83,6 +82,5 @@
  
  */
 - (UIViewController *)rootViewControllerForNotice;
-#endif
 
 @end

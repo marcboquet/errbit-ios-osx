@@ -23,11 +23,7 @@
  */
 
 #import <TargetConditionals.h>
-#if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
-#else
-#import <Foundation/Foundation.h>
-#endif
 
 /*
  
@@ -98,7 +94,6 @@ NSArray *EBNotifierParseCallStack(NSArray *callStack);
  */
 NSString *EBNotifierActionFromParsedCallStack(NSArray *callStack, NSString *executable);
 
-#if TARGET_OS_IPHONE
 /*
  
  Get the class name of the on-screen view controller. This does not indicate the
@@ -127,14 +122,13 @@ NSString *EBNotifierCurrentViewController(void);
  
  */
 NSString *EBNotifierVisibleViewControllerFromViewController(UIViewController *controller);
-#endif
 
 /*
  
  Get a localized string for the given key from the EBNotifier bundle
  
  */
-NSString* ABLocalizedString(NSString* key);
+NSString* EBLocalizedString(NSString* key);
 
 // useful defines
-#define ABLog(fmt, args...) NSLog(@"[Airbrake] " fmt, ##args)
+#define EBLog(fmt, args...) NSLog(@"[Airbrake] " fmt, ##args)
