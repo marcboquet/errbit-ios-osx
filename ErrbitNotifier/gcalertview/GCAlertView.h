@@ -25,7 +25,7 @@
 #import <TargetConditionals.h>
 #if TARGET_OS_IPHONE
 #ifndef __IPHONE_4_0
-#error This project uses features only available in iOS 4.0 and later
+#error This project uses features only available in iOS 6.0 and later
 #endif
 #import <UIKit/UIKit.h>
 
