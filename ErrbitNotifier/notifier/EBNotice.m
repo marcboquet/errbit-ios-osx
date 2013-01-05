@@ -57,7 +57,7 @@ const int EBNotifierExceptionNoticeType   = 2;
 @property (nonatomic, copy) NSString        *action;
 @property (nonatomic, copy) NSString        *executable;
 @property (nonatomic, copy) NSArray         *callStack;
-@property (nonatomic, retain) NSNumber      *noticeVersion;
+@property (nonatomic, strong) NSNumber      *noticeVersion;
 @property (nonatomic, copy) NSDictionary    *environmentInfo;
 @end
 
@@ -172,7 +172,6 @@ const int EBNotifierExceptionNoticeType   = 2;
                 NSMutableDictionary *mutableInfo = [self.environmentInfo mutableCopy];
                 [mutableInfo addEntriesFromDictionary:[dictionary objectForKey:EBNotifierExceptionParametersKey]];
                 self.environmentInfo = mutableInfo;
-                [mutableInfo release];
                 
             }
             
@@ -186,19 +185,15 @@ const int EBNotifierExceptionNoticeType   = 2;
         }
         @catch (NSException *exception) {
             ABLog(@"%@", exception);
-            [self release];
             return nil;
         }
     }
     return self;
 }
 + (EBNotice *)noticeWithContentsOfFile:(NSString *)path {
-    return [[[EBNotice alloc] initWithContentsOfFile:path] autorelease];
+    return [[EBNotice alloc] initWithContentsOfFile:path];
 }
 - (NSString *)errbitXMLString {
-    
-    // pool
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
     // create root
     DDXMLElement *notice = [DDXMLElement elementWithName:@"notice"];
@@ -264,11 +259,8 @@ const int EBNotifierExceptionNoticeType   = 2;
     // get return value
     NSString *XMLString = [[notice XMLString] copy];
     
-    // pool
-    [pool drain];
-    
     // return
-    return [XMLString autorelease];
+    return XMLString;
     
 }
 - (NSString *)description {
@@ -283,17 +275,6 @@ const int EBNotifierExceptionNoticeType   = 2;
 	}
 	free(properties);
     return [NSString stringWithFormat:@"%@ %@", [super description], [dictionary description]]; 
-}
-- (void)dealloc {
-	self.exceptionName = nil;
-	self.exceptionReason = nil;
-	self.environmentName = nil;
-	self.environmentInfo = nil;
-    self.bundleVersion = nil;
-    self.action = nil;
-	self.callStack = nil;
-	self.controller = nil;
-	[super dealloc];
 }
 
 @end

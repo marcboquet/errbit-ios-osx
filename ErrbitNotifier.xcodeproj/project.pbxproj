@@ -312,6 +312,7 @@
 		6149B6C61697CA1C007D5DF7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				DSTROOT = /tmp/ErrbitNotifier.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ErrbitNotifier/ErrbitNotifier-Prefix.pch";
@@ -324,6 +325,7 @@
 		6149B6C71697CA1C007D5DF7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				DSTROOT = /tmp/ErrbitNotifier.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ErrbitNotifier/ErrbitNotifier-Prefix.pch";

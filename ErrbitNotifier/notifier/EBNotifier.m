@@ -358,7 +358,6 @@ void EBNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
              attributes:nil
              error:nil];
         }
-        [path retain];
     });
     return path;
 }
@@ -519,7 +518,6 @@ void EBNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
                                     initWithData:responseBody
                                     encoding:NSUTF8StringEncoding];
         ABLog(@"%@", responseString);
-        [responseString release];
 #endif
     }
     
@@ -617,7 +615,6 @@ void EBNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
     [alert setDidDismissBlock:delegatePresentBlock];
     [alert setCancelButtonIndex:2];
     [alert show];
-    [alert release];
     
 #else
     

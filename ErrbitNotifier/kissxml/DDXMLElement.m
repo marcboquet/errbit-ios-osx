@@ -10,7 +10,7 @@
 **/
 + (id)nodeWithElementPrimitive:(xmlNodePtr)node owner:(DDXMLNode *)owner
 {
-	return [[[DDXMLElement alloc] initWithElementPrimitive:node owner:owner] autorelease];
+	return [[DDXMLElement alloc] initWithElementPrimitive:node owner:owner];
 }
 
 - (id)initWithElementPrimitive:(xmlNodePtr)node owner:(DDXMLNode *)inOwner
@@ -32,7 +32,6 @@
 	// Promote initializers which use proper parameter types to enable compiler to catch more mistakes.
 	NSAssert(NO, @"Use initWithElementPrimitive:owner:");
 	
-	[self release];
 	return nil;
 }
 
@@ -43,7 +42,6 @@
 	xmlNodePtr node = xmlNewNode(NULL, [name xmlChar]);
 	if (node == NULL)
 	{
-		[self release];
 		return nil;
 	}
 	
@@ -57,7 +55,6 @@
 	xmlNodePtr node = xmlNewNode(NULL, [name xmlChar]);
 	if (node == NULL)
 	{
-		[self release];
 		return nil;
 	}
 	
@@ -74,7 +71,6 @@
 	xmlNodePtr node = xmlNewNode(NULL, [name xmlChar]);
 	if (node == NULL)
 	{
-		[self release];
 		return nil;
 	}
 	
@@ -89,16 +85,13 @@
 	DDXMLDocument *doc = [[DDXMLDocument alloc] initWithXMLString:string options:0 error:error];
 	if (doc == nil)
 	{
-		[self release];
 		return nil;
 	}
 	
 	DDXMLElement *result = [doc rootElement];
 	[result detach];
-	[doc release];
 	
-	[self release];
-	return [result retain];
+	return result;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -306,8 +299,7 @@
 	xmlAddChild((xmlNodePtr)genericPtr, (xmlNodePtr)attribute->genericPtr);
 	
 	// The attribute is now part of the xml tree heirarchy
-	[attribute->owner release];
-	attribute->owner = [self retain];
+	attribute->owner = self;
 }
 
 - (void)removeAttributeForName:(NSString *)name
@@ -465,8 +457,7 @@
 	}
 	
 	// The namespace is now part of the xml tree heirarchy
-	[namespace->owner release];
-	namespace->owner = [self retain];
+	namespace->owner = self;
 	
 	if ([namespace isKindOfClass:[DDXMLNamespaceNode class]])
 	{
@@ -684,8 +675,7 @@
 	xmlAddChild((xmlNodePtr)genericPtr, (xmlNodePtr)child->genericPtr);
 	
 	// The node is now part of the xml tree heirarchy
-	[child->owner release];
-	child->owner = [self retain];
+	child->owner = self;
 }
 
 - (void)insertChild:(DDXMLNode *)child atIndex:(NSUInteger)index
@@ -711,8 +701,7 @@
 			{
 				xmlAddPrevSibling(childNodePtr, (xmlNodePtr)child->genericPtr);
 				
-				[child->owner release];
-				child->owner = [self retain];
+				child->owner = self;
 				
 				return;
 			}
@@ -726,8 +715,7 @@
 	{
 		xmlAddChild((xmlNodePtr)genericPtr, (xmlNodePtr)child->genericPtr);
 		
-		[child->owner release];
-		child->owner = [self retain];
+		child->owner = self;
 		
 		return;
 	}
