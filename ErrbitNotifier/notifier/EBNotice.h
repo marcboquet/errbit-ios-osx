@@ -25,7 +25,7 @@
 #import <Foundation/Foundation.h>
 
 // notice info
-typedef struct ab_signal_info_t {
+typedef struct eb_signal_info_t {
 	
 	// file name used for a signal notice
 	const char *notice_path;
@@ -38,33 +38,33 @@ typedef struct ab_signal_info_t {
     unsigned long user_data_length;
     void *user_data;
 	
-} ab_signal_info_t;
-ab_signal_info_t ab_signal_info;
+} eb_signal_info_t;
+eb_signal_info_t eb_signal_info;
 
 // notice payload keys
-extern NSString * const ABNotifierOperatingSystemVersionKey;
-extern NSString * const ABNotifierApplicationVersionKey;
-extern NSString * const ABNotifierPlatformNameKey;
-extern NSString * const ABNotifierEnvironmentNameKey;
-extern NSString * const ABNotifierBundleVersionKey;
-extern NSString * const ABNotifierExceptionNameKey;
-extern NSString * const ABNotifierExceptionReasonKey;
-extern NSString * const ABNotifierCallStackKey;
-extern NSString * const ABNotifierControllerKey;
-extern NSString * const ABNotifierExecutableKey;
-extern NSString * const ABNotifierExceptionParametersKey;
+extern NSString * const EBNotifierOperatingSystemVersionKey;
+extern NSString * const EBNotifierApplicationVersionKey;
+extern NSString * const EBNotifierPlatformNameKey;
+extern NSString * const EBNotifierEnvironmentNameKey;
+extern NSString * const EBNotifierBundleVersionKey;
+extern NSString * const EBNotifierExceptionNameKey;
+extern NSString * const EBNotifierExceptionReasonKey;
+extern NSString * const EBNotifierCallStackKey;
+extern NSString * const EBNotifierControllerKey;
+extern NSString * const EBNotifierExecutableKey;
+extern NSString * const EBNotifierExceptionParametersKey;
 
 // notice file extension
-extern NSString * const ABNotifierNoticePathExtension;
+extern NSString * const EBNotifierNoticePathExtension;
 
 // file flags
-extern const int ABNotifierNoticeVersion;
-extern const int ABNotifierSignalNoticeType;
-extern const int ABNotifierExceptionNoticeType;
+extern const int EBNotifierNoticeVersion;
+extern const int EBNotifierSignalNoticeType;
+extern const int EBNotifierExceptionNoticeType;
 
 /*
  
- Instances of the ABNotice class represent a single crash report. It holds all
+ Instances of the EBNotice class represent a single crash report. It holds all
  of the properties that get posted to Airbrake.
  
  All of the properties represented as instance variables are persisted in the
@@ -72,7 +72,7 @@ extern const int ABNotifierExceptionNoticeType;
  HTNotifier at runtime (primarily the API key).
  
  */
-@interface ABNotice : NSObject {
+@interface EBNotice : NSObject {
     NSString *__environmentName;
     NSString *__bundleVersion;
     NSString *__exceptionName;
@@ -87,9 +87,9 @@ extern const int ABNotifierExceptionNoticeType;
 
 // create an object representation of notice data
 - (id)initWithContentsOfFile:(NSString *)path;
-+ (ABNotice *)noticeWithContentsOfFile:(NSString *)path;
++ (EBNotice *)noticeWithContentsOfFile:(NSString *)path;
 
-// get a string representation of the hoptoad xml payload
-- (NSString *)hoptoadXMLString;
+// get a string representation of the errbit xml payload
+- (NSString *)errbitXMLString;
 
 @end

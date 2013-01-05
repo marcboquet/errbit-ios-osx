@@ -16,9 +16,9 @@
 		6149B6E71697CA3D007D5DF7 /* DDXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 6149B6D41697CA3D007D5DF7 /* DDXMLDocument.m */; };
 		6149B6E81697CA3D007D5DF7 /* DDXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6149B6D61697CA3D007D5DF7 /* DDXMLElement.m */; };
 		6149B6E91697CA3D007D5DF7 /* DDXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 6149B6D81697CA3D007D5DF7 /* DDXMLNode.m */; };
-		6149B6EA1697CA3D007D5DF7 /* ABNotice.m in Sources */ = {isa = PBXBuildFile; fileRef = 6149B6DD1697CA3D007D5DF7 /* ABNotice.m */; };
-		6149B6EB1697CA3D007D5DF7 /* ABNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 6149B6E01697CA3D007D5DF7 /* ABNotifier.m */; };
-		6149B6EC1697CA3D007D5DF7 /* ABNotifierFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6149B6E31697CA3D007D5DF7 /* ABNotifierFunctions.m */; };
+		6149B6EA1697CA3D007D5DF7 /* EBNotice.m in Sources */ = {isa = PBXBuildFile; fileRef = 6149B6DD1697CA3D007D5DF7 /* EBNotice.m */; };
+		6149B6EB1697CA3D007D5DF7 /* EBNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 6149B6E01697CA3D007D5DF7 /* EBNotifier.m */; };
+		6149B6EC1697CA3D007D5DF7 /* EBNotifierFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6149B6E31697CA3D007D5DF7 /* EBNotifierFunctions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -54,14 +54,14 @@
 		6149B6D71697CA3D007D5DF7 /* DDXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLNode.h; sourceTree = "<group>"; };
 		6149B6D81697CA3D007D5DF7 /* DDXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDXMLNode.m; sourceTree = "<group>"; };
 		6149B6DA1697CA3D007D5DF7 /* DDXMLPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLPrivate.h; sourceTree = "<group>"; };
-		6149B6DC1697CA3D007D5DF7 /* ABNotice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABNotice.h; sourceTree = "<group>"; };
-		6149B6DD1697CA3D007D5DF7 /* ABNotice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABNotice.m; sourceTree = "<group>"; };
-		6149B6DE1697CA3D007D5DF7 /* ABNotifier.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ABNotifier.bundle; sourceTree = "<group>"; };
-		6149B6DF1697CA3D007D5DF7 /* ABNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABNotifier.h; sourceTree = "<group>"; };
-		6149B6E01697CA3D007D5DF7 /* ABNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABNotifier.m; sourceTree = "<group>"; };
-		6149B6E11697CA3D007D5DF7 /* ABNotifierDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABNotifierDelegate.h; sourceTree = "<group>"; };
-		6149B6E21697CA3D007D5DF7 /* ABNotifierFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABNotifierFunctions.h; sourceTree = "<group>"; };
-		6149B6E31697CA3D007D5DF7 /* ABNotifierFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABNotifierFunctions.m; sourceTree = "<group>"; };
+		6149B6DC1697CA3D007D5DF7 /* EBNotice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBNotice.h; sourceTree = "<group>"; };
+		6149B6DD1697CA3D007D5DF7 /* EBNotice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBNotice.m; sourceTree = "<group>"; };
+		6149B6DE1697CA3D007D5DF7 /* EBNotifier.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = EBNotifier.bundle; sourceTree = "<group>"; };
+		6149B6DF1697CA3D007D5DF7 /* EBNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBNotifier.h; sourceTree = "<group>"; };
+		6149B6E01697CA3D007D5DF7 /* EBNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBNotifier.m; sourceTree = "<group>"; };
+		6149B6E11697CA3D007D5DF7 /* EBNotifierDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBNotifierDelegate.h; sourceTree = "<group>"; };
+		6149B6E21697CA3D007D5DF7 /* EBNotifierFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBNotifierFunctions.h; sourceTree = "<group>"; };
+		6149B6E31697CA3D007D5DF7 /* EBNotifierFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBNotifierFunctions.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,14 +177,14 @@
 		6149B6DB1697CA3D007D5DF7 /* notifier */ = {
 			isa = PBXGroup;
 			children = (
-				6149B6DC1697CA3D007D5DF7 /* ABNotice.h */,
-				6149B6DD1697CA3D007D5DF7 /* ABNotice.m */,
-				6149B6DE1697CA3D007D5DF7 /* ABNotifier.bundle */,
-				6149B6DF1697CA3D007D5DF7 /* ABNotifier.h */,
-				6149B6E01697CA3D007D5DF7 /* ABNotifier.m */,
-				6149B6E11697CA3D007D5DF7 /* ABNotifierDelegate.h */,
-				6149B6E21697CA3D007D5DF7 /* ABNotifierFunctions.h */,
-				6149B6E31697CA3D007D5DF7 /* ABNotifierFunctions.m */,
+				6149B6DC1697CA3D007D5DF7 /* EBNotice.h */,
+				6149B6DD1697CA3D007D5DF7 /* EBNotice.m */,
+				6149B6DE1697CA3D007D5DF7 /* EBNotifier.bundle */,
+				6149B6DF1697CA3D007D5DF7 /* EBNotifier.h */,
+				6149B6E01697CA3D007D5DF7 /* EBNotifier.m */,
+				6149B6E11697CA3D007D5DF7 /* EBNotifierDelegate.h */,
+				6149B6E21697CA3D007D5DF7 /* EBNotifierFunctions.h */,
+				6149B6E31697CA3D007D5DF7 /* EBNotifierFunctions.m */,
 			);
 			path = notifier;
 			sourceTree = "<group>";
@@ -247,9 +247,9 @@
 				6149B6E71697CA3D007D5DF7 /* DDXMLDocument.m in Sources */,
 				6149B6E81697CA3D007D5DF7 /* DDXMLElement.m in Sources */,
 				6149B6E91697CA3D007D5DF7 /* DDXMLNode.m in Sources */,
-				6149B6EA1697CA3D007D5DF7 /* ABNotice.m in Sources */,
-				6149B6EB1697CA3D007D5DF7 /* ABNotifier.m in Sources */,
-				6149B6EC1697CA3D007D5DF7 /* ABNotifierFunctions.m in Sources */,
+				6149B6EA1697CA3D007D5DF7 /* EBNotice.m in Sources */,
+				6149B6EB1697CA3D007D5DF7 /* EBNotifier.m in Sources */,
+				6149B6EC1697CA3D007D5DF7 /* EBNotifierFunctions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,6 +350,7 @@
 				6149B6C71697CA1C007D5DF7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

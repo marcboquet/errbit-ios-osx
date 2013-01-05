@@ -30,10 +30,10 @@
 #import <mach/task_info.h>
 #import <mach/mach_init.h>
 
-#import "ABNotifierFunctions.h"
-#import "ABNotice.h"
+#import "EBNotifierFunctions.h"
+#import "EBNotice.h"
 
-#import "ABNotifier.h"
+#import "EBNotifier.h"
 
 // handled signals
 int ht_signals_count = 6;
@@ -54,10 +54,10 @@ void ht_handle_exception(NSException *);
 void ht_handle_signal(int signal, siginfo_t *info, void *context) {
     
     // stop handler
-    ABNotifierStopSignalHandler();
+    EBNotifierStopSignalHandler();
     
     // get file handle
-    int fd = ABNotifierOpenNewNoticeFile(ab_signal_info.notice_path, ABNotifierSignalNoticeType);
+    int fd = EBNotifierOpenNewNoticeFile(eb_signal_info.notice_path, EBNotifierSignalNoticeType);
     
     // write if we have a file
     if (fd > -1) {
@@ -81,39 +81,39 @@ void ht_handle_signal(int signal, siginfo_t *info, void *context) {
     
 }
 void ht_handle_exception(NSException *exception) {
-    ABNotifierStopSignalHandler();
-    ABNotifierStopExceptionHandler();
-    [ABNotifier logException:exception];
+    EBNotifierStopSignalHandler();
+    EBNotifierStopExceptionHandler();
+    [EBNotifier logException:exception];
 }
 
 #pragma mark - notice file methods
-int ABNotifierOpenNewNoticeFile(const char *path, int type) {
+int EBNotifierOpenNewNoticeFile(const char *path, int type) {
     int fd = open(path, O_WRONLY | O_CREAT, S_IREAD | S_IWRITE);
     if (fd > -1) {
         
         // file version
-        write(fd, &ABNotifierNoticeVersion, sizeof(int));
+        write(fd, &EBNotifierNoticeVersion, sizeof(int));
         
         // file bype
         write(fd, &type, sizeof(int));
         
         // notice payload
-        write(fd, &ab_signal_info.notice_payload_length, sizeof(unsigned long));
-        write(fd, ab_signal_info.notice_payload, ab_signal_info.notice_payload_length);
+        write(fd, &eb_signal_info.notice_payload_length, sizeof(unsigned long));
+        write(fd, eb_signal_info.notice_payload, eb_signal_info.notice_payload_length);
         
         // user data
-        write(fd, &ab_signal_info.user_data_length, sizeof(unsigned long));
-        write(fd, ab_signal_info.user_data, ab_signal_info.user_data_length);
+        write(fd, &eb_signal_info.user_data_length, sizeof(unsigned long));
+        write(fd, eb_signal_info.user_data, eb_signal_info.user_data_length);
         
     }
     return fd;
 }
 
 #pragma mark - modify handler state
-void ABNotifierStartExceptionHandler(void) {
+void EBNotifierStartExceptionHandler(void) {
     NSSetUncaughtExceptionHandler(&ht_handle_exception);
 }
-void ABNotifierStartSignalHandler(void) {
+void EBNotifierStartSignalHandler(void) {
     for (int i = 0; i < ht_signals_count; i++) {
 		int signal = ht_signals[i];
 		struct sigaction action;
@@ -125,10 +125,10 @@ void ABNotifierStartSignalHandler(void) {
 		}
 	}
 }
-void ABNotifierStopExceptionHandler(void) {
+void EBNotifierStopExceptionHandler(void) {
     NSSetUncaughtExceptionHandler(NULL);
 }
-void ABNotifierStopSignalHandler(void) {
+void EBNotifierStopSignalHandler(void) {
 	for (int i = 0; i < ht_signals_count; i++) {
 		int signal = ht_signals[i];
 		struct sigaction action;
@@ -139,7 +139,7 @@ void ABNotifierStopSignalHandler(void) {
 }
 
 #pragma mark - Info.plist accessors
-NSString *ABNotifierApplicationVersion(void) {
+NSString *EBNotifierApplicationVersion(void) {
     static NSString *version = nil;
     static dispatch_once_t token;
     dispatch_once(&token, ^{
@@ -153,7 +153,7 @@ NSString *ABNotifierApplicationVersion(void) {
     });
     return version;
 }
-NSString *ABNotifierApplicationName(void) {
+NSString *EBNotifierApplicationName(void) {
     static NSString *name = nil;
     static dispatch_once_t token;
     dispatch_once(&token, ^{
@@ -168,7 +168,7 @@ NSString *ABNotifierApplicationName(void) {
 }
 
 #pragma mark - platform accessors
-NSString *ABNotifierOperatingSystemVersion(void) {
+NSString *EBNotifierOperatingSystemVersion(void) {
     static NSString *version = nil;
     static dispatch_once_t token;
     dispatch_once(&token, ^{
@@ -180,7 +180,7 @@ NSString *ABNotifierOperatingSystemVersion(void) {
     });
     return version;
 }
-NSString *ABNotifierMachineName(void) {
+NSString *EBNotifierMachineName(void) {
 #if TARGET_IPHONE_SIMULATOR
     return @"iPhone Simulator";
 #else
@@ -200,14 +200,14 @@ NSString *ABNotifierMachineName(void) {
     return name;
 #endif
 }
-NSString *ABNotifierPlatformName(void) {
+NSString *EBNotifierPlatformName(void) {
 #if TARGET_IPHONE_SIMULATOR || !TARGET_OS_IPHONE
-    return ABNotifierMachineName();
+    return EBNotifierMachineName();
 #else
     static NSString *platform = nil;
     static dispatch_once_t token;
     dispatch_once(&token, ^{
-        NSString *machine = ABNotifierMachineName();
+        NSString *machine = EBNotifierMachineName();
         // iphone
         if ([machine isEqualToString:@"iPhone1,1"]) { platform = @"iPhone"; }
         else if ([machine isEqualToString:@"iPhone1,2"]) { platform = @"iPhone 3G"; }
@@ -233,7 +233,7 @@ NSString *ABNotifierPlatformName(void) {
 }
 
 #pragma mark - call stack functions
-NSArray *ABNotifierParseCallStack(NSArray *callStack) {
+NSArray *EBNotifierParseCallStack(NSArray *callStack) {
     static NSString *pattern = @"^(\\d+)\\s+(\\S.*?)\\s+((0x[0-9a-f]+)\\s+.*)$";
     NSMutableArray *parsed = [NSMutableArray arrayWithCapacity:[callStack count]];
     [callStack enumerateObjectsUsingBlock:^(id line, NSUInteger idx, BOOL *stop) {
@@ -249,7 +249,7 @@ NSArray *ABNotifierParseCallStack(NSArray *callStack) {
     }];
     return parsed;
 }
-NSString *ABNotifierActionFromParsedCallStack(NSArray *callStack, NSString *executable) {
+NSString *EBNotifierActionFromParsedCallStack(NSArray *callStack, NSString *executable) {
     NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id obj, NSDictionary *bindings) {
         if (![[(NSArray *)obj objectAtIndex:2] isEqualToString:executable]) { return NO; }
         NSRange range = [[(NSArray *)obj objectAtIndex:3] rangeOfString:@"ht_handle_signal"];
@@ -261,7 +261,7 @@ NSString *ABNotifierActionFromParsedCallStack(NSArray *callStack, NSString *exec
 }
 
 #pragma mark - memory usage
-NSString *ABNotifierResidentMemoryUsage(void) {
+NSString *EBNotifierResidentMemoryUsage(void) {
     struct task_basic_info basic;
     mach_msg_type_number_t count = TASK_BASIC_INFO_COUNT;
     if (task_info(mach_task_self(), TASK_BASIC_INFO, (task_info_t)&basic, &count) == KERN_SUCCESS) {
@@ -273,7 +273,7 @@ NSString *ABNotifierResidentMemoryUsage(void) {
         return @"Unknown";
     }
 }
-NSString *ABNotifierVirtualMemoryUsage(void) {
+NSString *EBNotifierVirtualMemoryUsage(void) {
     struct task_basic_info basic;
     mach_msg_type_number_t count = TASK_BASIC_INFO_COUNT;
     if (task_info(mach_task_self(), TASK_BASIC_INFO, (task_info_t)&basic, &count) == KERN_SUCCESS) {
@@ -289,7 +289,7 @@ NSString *ABNotifierVirtualMemoryUsage(void) {
 #if TARGET_OS_IPHONE
 
 #pragma mark - view controller
-NSString *ABNotifierCurrentViewController(void) {
+NSString *EBNotifierCurrentViewController(void) {
     
     // assert
     NSCAssert([NSThread isMainThread], @"This function must be called on the main thread");
@@ -298,7 +298,7 @@ NSString *ABNotifierCurrentViewController(void) {
 	UIViewController *rootController = nil;
     
 	// try getting view controller from notifier delegate
-	id<ABNotifierDelegate> delegte = [ABNotifier delegate];
+	id<EBNotifierDelegate> delegte = [EBNotifier delegate];
 	if ([delegte respondsToSelector:@selector(rootViewControllerForNotice)]) {
 		rootController = [delegte rootViewControllerForNotice];
 	}
@@ -316,11 +316,11 @@ NSString *ABNotifierCurrentViewController(void) {
 	}
 	
 	// call method to get class name
-	return ABNotifierVisibleViewControllerFromViewController(rootController);
+	return EBNotifierVisibleViewControllerFromViewController(rootController);
     
 }
 
-NSString *ABNotifierVisibleViewControllerFromViewController(UIViewController *controller) {
+NSString *EBNotifierVisibleViewControllerFromViewController(UIViewController *controller) {
     
     // assert
     NSCAssert([NSThread isMainThread], @"This function must be called on the main thread");
@@ -328,13 +328,13 @@ NSString *ABNotifierVisibleViewControllerFromViewController(UIViewController *co
 	// tab bar controller
 	if ([controller isKindOfClass:[UITabBarController class]]) {
 		UIViewController *visibleController = [(UITabBarController *)controller selectedViewController];
-		return ABNotifierVisibleViewControllerFromViewController(visibleController);
+		return EBNotifierVisibleViewControllerFromViewController(visibleController);
 	}
     
 	// navigation controller
 	else if ([controller isKindOfClass:[UINavigationController class]]) {
 		UIViewController *visibleController = [(UINavigationController *)controller visibleViewController];
-		return ABNotifierVisibleViewControllerFromViewController(visibleController);
+		return EBNotifierVisibleViewControllerFromViewController(visibleController);
 	}
     
 	// other type
@@ -351,7 +351,7 @@ NSString *ABLocalizedString(NSString* key) {
     static NSBundle *bundle = nil;
     static dispatch_once_t token;
     dispatch_once(&token, ^{
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"ABNotifier" ofType:@"bundle"];
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"EBNotifier" ofType:@"bundle"];
         bundle = [[NSBundle alloc] initWithPath:path];
     });
     return [bundle localizedStringForKey:key value:key table:nil];

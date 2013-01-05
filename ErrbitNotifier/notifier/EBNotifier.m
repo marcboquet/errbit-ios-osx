@@ -22,45 +22,45 @@
  
  */
 
-#import "ABNotice.h"
-#import "ABNotifierFunctions.h"
+#import "EBNotice.h"
+#import "EBNotifierFunctions.h"
 
-#import "ABNotifier.h"
+#import "EBNotifier.h"
 
 #import "GCAlertView.h"
 
 // internal
 static SCNetworkReachabilityRef __reachability = nil;
-static id<ABNotifierDelegate> __delegate = nil;
+static id<EBNotifierDelegate> __delegate = nil;
 static NSMutableDictionary *__userData;
 static NSString * __APIKey = nil;
 static BOOL __useSSL = NO;
 static BOOL __displayPrompt = YES;
 
 // constant strings
-static NSString * const ABNotifierHostName                  = @"api.airbrake.io";
-static NSString * const ABNotifierAlwaysSendKey             = @"AlwaysSendCrashReports";
-NSString * const ABNotifierWillDisplayAlertNotification     = @"ABNotifierWillDisplayAlert";
-NSString * const ABNotifierDidDismissAlertNotification      = @"ABNotifierDidDismissAlert";
-NSString * const ABNotifierWillPostNoticesNotification      = @"ABNotifierWillPostNotices";
-NSString * const ABNotifierDidPostNoticesNotification       = @"ABNotifierDidPostNotices";
-NSString * const ABNotifierVersion                          = @"3.1";
-NSString * const ABNotifierDevelopmentEnvironment           = @"Development";
-NSString * const ABNotifierAdHocEnvironment                 = @"Ad Hoc";
-NSString * const ABNotifierAppStoreEnvironment              = @"App Store";
-NSString * const ABNotifierReleaseEnvironment               = @"Release";
+static NSString * const EBNotifierHostName                  = @"api.airbrake.io";
+static NSString * const EBNotifierAlwaysSendKey             = @"AlwaysSendCrashReports";
+NSString * const EBNotifierWillDisplayAlertNotification     = @"EBNotifierWillDisplayAlert";
+NSString * const EBNotifierDidDismissAlertNotification      = @"EBNotifierDidDismissAlert";
+NSString * const EBNotifierWillPostNoticesNotification      = @"EBNotifierWillPostNotices";
+NSString * const EBNotifierDidPostNoticesNotification       = @"EBNotifierDidPostNotices";
+NSString * const EBNotifierVersion                          = @"3.1";
+NSString * const EBNotifierDevelopmentEnvironment           = @"Development";
+NSString * const EBNotifierAdHocEnvironment                 = @"Ad Hoc";
+NSString * const EBNotifierAppStoreEnvironment              = @"App Store";
+NSString * const EBNotifierReleaseEnvironment               = @"Release";
 #if defined (DEBUG) || defined (DEVELOPMENT)
-NSString * const ABNotifierAutomaticEnvironment             = @"Development";
+NSString * const EBNotifierAutomaticEnvironment             = @"Development";
 #elif defined (TEST) || defined (TESTING)
-NSString * const ABNotifierAutomaticEnvironment             = @"Test";
+NSString * const EBNotifierAutomaticEnvironment             = @"Test";
 #else
-NSString * const ABNotifierAutomaticEnvironment             = @"Production";
+NSString * const EBNotifierAutomaticEnvironment             = @"Production";
 #endif
 
 // reachability callback
-void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkReachabilityFlags flags, void *info);
+void EBNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkReachabilityFlags flags, void *info);
 
-@interface ABNotifier ()
+@interface EBNotifier ()
 
 // get the path where notices are stored
 + (NSString *)pathForNoticesDirectory;
@@ -88,13 +88,13 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
 
 @end
 
-@implementation ABNotifier
+@implementation EBNotifier
 
 #pragma mark - initialize the notifier
 + (void)startNotifierWithAPIKey:(NSString *)key
                 environmentName:(NSString *)name
                          useSSL:(BOOL)useSSL
-                       delegate:(id<ABNotifierDelegate>)delegate {
+                       delegate:(id<EBNotifierDelegate>)delegate {
     [self startNotifierWithAPIKey:key
                   environmentName:name
                            useSSL:useSSL
@@ -106,7 +106,7 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
 + (void)startNotifierWithAPIKey:(NSString *)key
                 environmentName:(NSString *)name
                          useSSL:(BOOL)useSSL
-                       delegate:(id<ABNotifierDelegate>)delegate
+                       delegate:(id<EBNotifierDelegate>)delegate
         installExceptionHandler:(BOOL)exception
            installSignalHandler:(BOOL)signal {
     [self startNotifierWithAPIKey:key
@@ -120,7 +120,7 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
 + (void)startNotifierWithAPIKey:(NSString *)key
                 environmentName:(NSString *)name
                          useSSL:(BOOL)useSSL
-                       delegate:(id<ABNotifierDelegate>)delegate
+                       delegate:(id<EBNotifierDelegate>)delegate
         installExceptionHandler:(BOOL)exception
            installSignalHandler:(BOOL)signal
               displayUserPrompt:(BOOL)display {
@@ -133,7 +133,7 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
             
             // register defaults
             [[NSUserDefaults standardUserDefaults] registerDefaults:
-             [NSDictionary dictionaryWithObject:@"NO" forKey:ABNotifierAlwaysSendKey]];
+             [NSDictionary dictionaryWithObject:@"NO" forKey:EBNotifierAlwaysSendKey]];
             
             // capture vars
             __userData = [[NSMutableDictionary alloc] init];
@@ -144,8 +144,8 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
             // switch on api key
             if ([key length]) {
                 __APIKey = [key copy];
-                __reachability = SCNetworkReachabilityCreateWithName(NULL, [ABNotifierHostName UTF8String]);
-                if (SCNetworkReachabilitySetCallback(__reachability, ABNotifierReachabilityDidChange, nil)) {
+                __reachability = SCNetworkReachabilityCreateWithName(NULL, [EBNotifierHostName UTF8String]);
+                if (SCNetworkReachabilitySetCallback(__reachability, EBNotifierReachabilityDidChange, nil)) {
                     if (!SCNetworkReachabilityScheduleWithRunLoop(__reachability, CFRunLoopGetMain(), kCFRunLoopDefaultMode)) {
                         ABLog(@"Reachability could not be configired. No notices will be posted.");
                     }
@@ -163,43 +163,43 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
                 
                 // cache signal notice file path
                 NSString *fileName = [[NSProcessInfo processInfo] globallyUniqueString];
-                const char *filePath = [[ABNotifier pathForNewNoticeWithName:fileName] UTF8String];
+                const char *filePath = [[EBNotifier pathForNewNoticeWithName:fileName] UTF8String];
                 length = (strlen(filePath) + 1);
-                ab_signal_info.notice_path = malloc(length);
-                memcpy((void *)ab_signal_info.notice_path, filePath, length);
+                eb_signal_info.notice_path = malloc(length);
+                memcpy((void *)eb_signal_info.notice_path, filePath, length);
                 
                 // cache notice payload
                 NSData *data = [NSKeyedArchiver archivedDataWithRootObject:
                                 [NSDictionary dictionaryWithObjectsAndKeys:
-                                 name, ABNotifierEnvironmentNameKey,
+                                 name, EBNotifierEnvironmentNameKey,
                                  [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"],
-                                 ABNotifierBundleVersionKey,
+                                 EBNotifierBundleVersionKey,
                                  [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleExecutable"],
-                                 ABNotifierExecutableKey,
+                                 EBNotifierExecutableKey,
                                  nil]];
                 length = [data length];
-                ab_signal_info.notice_payload = malloc(length);
-                memcpy(ab_signal_info.notice_payload, [data bytes], length);
-                ab_signal_info.notice_payload_length = length;
+                eb_signal_info.notice_payload = malloc(length);
+                memcpy(eb_signal_info.notice_payload, [data bytes], length);
+                eb_signal_info.notice_payload_length = length;
                 
                 // cache user data
                 [self addEnvironmentEntriesFromDictionary:
                  [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                  ABNotifierPlatformName(), ABNotifierPlatformNameKey,
-                  ABNotifierOperatingSystemVersion(), ABNotifierOperatingSystemVersionKey,
-                  ABNotifierApplicationVersion(), ABNotifierApplicationVersionKey,
+                  EBNotifierPlatformName(), EBNotifierPlatformNameKey,
+                  EBNotifierOperatingSystemVersion(), EBNotifierOperatingSystemVersionKey,
+                  EBNotifierApplicationVersion(), EBNotifierApplicationVersionKey,
                   nil]];
                 
                 // start handlers
                 if (exception) {
-                    ABNotifierStartExceptionHandler();
+                    EBNotifierStartExceptionHandler();
                 }
                 if (signal) {
-                    ABNotifierStartSignalHandler();
+                    EBNotifierStartSignalHandler();
                 }
                 
                 // log
-                ABLog(@"Notifier %@ ready to catch errors", ABNotifierVersion);
+                ABLog(@"Notifier %@ ready to catch errors", EBNotifierVersion);
                 ABLog(@"Environment \"%@\"", name);
                 
             }
@@ -212,7 +212,7 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
 }
 
 #pragma mark - accessors
-+ (id<ABNotifierDelegate>)delegate {
++ (id<EBNotifierDelegate>)delegate {
     @synchronized(self) {
         return __delegate;
     }
@@ -237,7 +237,7 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
     // get file handle
     NSString *name = [[NSProcessInfo processInfo] globallyUniqueString];
     NSString *path = [self pathForNewNoticeWithName:name];
-    int fd = ABNotifierOpenNewNoticeFile([path UTF8String], ABNotifierExceptionNoticeType);
+    int fd = EBNotifierOpenNewNoticeFile([path UTF8String], EBNotifierExceptionNoticeType);
     
     // write stuff
     if (fd > -1) {
@@ -246,17 +246,17 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
             // create parameters
             NSMutableDictionary *exceptionParameters = [NSMutableDictionary dictionary];
             if ([parameters count]) { [exceptionParameters addEntriesFromDictionary:parameters]; }
-            [exceptionParameters setValue:ABNotifierResidentMemoryUsage() forKey:@"Resident Memory Size"];
-            [exceptionParameters setValue:ABNotifierVirtualMemoryUsage() forKey:@"Virtual Memory Size"];
+            [exceptionParameters setValue:EBNotifierResidentMemoryUsage() forKey:@"Resident Memory Size"];
+            [exceptionParameters setValue:EBNotifierVirtualMemoryUsage() forKey:@"Virtual Memory Size"];
             
             // write exception
             NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        [exception name], ABNotifierExceptionNameKey,
-                                        [exception reason], ABNotifierExceptionReasonKey,
-                                        [exception callStackSymbols], ABNotifierCallStackKey,
-                                        exceptionParameters, ABNotifierExceptionParametersKey,
+                                        [exception name], EBNotifierExceptionNameKey,
+                                        [exception reason], EBNotifierExceptionReasonKey,
+                                        [exception callStackSymbols], EBNotifierCallStackKey,
+                                        exceptionParameters, EBNotifierExceptionParametersKey,
 #if TARGET_OS_IPHONE
-                                        ABNotifierCurrentViewController(), ABNotifierControllerKey,
+                                        EBNotifierCurrentViewController(), EBNotifierControllerKey,
 #endif
                                         nil];
             NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dictionary];
@@ -265,7 +265,7 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
             write(fd, [data bytes], length);
             
             // delegate
-            id<ABNotifierDelegate> delegate = [self delegate];
+            id<EBNotifierDelegate> delegate = [self delegate];
             if ([delegate respondsToSelector:@selector(notifierDidLogException:)]) {
                 [delegate notifierDidLogException:exception];
             }
@@ -298,13 +298,13 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
 + (void)setEnvironmentValue:(NSString *)value forKey:(NSString *)key {
     @synchronized(self) {
         [__userData setObject:value forKey:key];
-        [ABNotifier cacheUserDataDictionary];
+        [EBNotifier cacheUserDataDictionary];
     }
 }
 + (void)addEnvironmentEntriesFromDictionary:(NSDictionary *)dictionary {
     @synchronized(self) {
         [__userData addEntriesFromDictionary:dictionary];
-        [ABNotifier cacheUserDataDictionary];
+        [EBNotifier cacheUserDataDictionary];
     }
 }
 + (NSString *)environmentValueForKey:(NSString *)key {
@@ -315,13 +315,13 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
 + (void)removeEnvironmentValueForKey:(NSString *)key {
     @synchronized(self) {
         [__userData removeObjectForKey:key];
-        [ABNotifier cacheUserDataDictionary];
+        [EBNotifier cacheUserDataDictionary];
     }
 }
 + (void)removeEnvironmentValuesForKeys:(NSArray *)keys {
     @synchronized(self) {
         [__userData removeObjectsForKeys:keys];
-        [ABNotifier cacheUserDataDictionary];
+        [EBNotifier cacheUserDataDictionary];
     }
 }
 
@@ -337,7 +337,7 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
             path = NSTemporaryDirectory();
         }
         else {
-            path = [path stringByAppendingPathComponent:@"Hoptoad Notices"];
+            path = [path stringByAppendingPathComponent:@"Errbit Notices"];
         }
 #else
         NSArray *folders = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
@@ -346,8 +346,8 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
             path = NSTemporaryDirectory();
         }
         else {
-            path = [path stringByAppendingPathComponent:ABNotifierApplicationName()];
-            path = [path stringByAppendingPathComponent:@"Hoptoad Notices"];
+            path = [path stringByAppendingPathComponent:EBNotifierApplicationName()];
+            path = [path stringByAppendingPathComponent:@"Errbit Notices"];
         }
 #endif
         NSFileManager *manager = [NSFileManager defaultManager];
@@ -365,14 +365,14 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
 + (NSString *)pathForNewNoticeWithName:(NSString *)name {
     NSString *path = [self pathForNoticesDirectory];
     path = [path stringByAppendingPathComponent:name];
-    return [path stringByAppendingPathExtension:ABNotifierNoticePathExtension];
+    return [path stringByAppendingPathExtension:EBNotifierNoticePathExtension];
 }
 + (NSArray *)pathsForAllNotices {
     NSString *path = [self pathForNoticesDirectory];
     NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
     NSMutableArray *paths = [NSMutableArray arrayWithCapacity:[contents count]];
     [contents enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if ([[obj pathExtension] isEqualToString:ABNotifierNoticePathExtension]) {
+        if ([[obj pathExtension] isEqualToString:EBNotifierNoticePathExtension]) {
             NSString *noticePath = [path stringByAppendingPathComponent:obj];
             [paths addObject:noticePath];
         }
@@ -389,21 +389,21 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
     
     // get variables
     if ([paths count] == 0) { return; }
-    id<ABNotifierDelegate> delegate = [ABNotifier delegate];
+    id<EBNotifierDelegate> delegate = [EBNotifier delegate];
     
     // notify people
     dispatch_sync(dispatch_get_main_queue(), ^{
         if ([delegate respondsToSelector:@selector(notifierWillPostNotices)]) {
             [delegate notifierWillPostNotices];
         }
-        [[NSNotificationCenter defaultCenter] postNotificationName:ABNotifierWillPostNoticesNotification object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:EBNotifierWillPostNoticesNotification object:self];
     });
     
     // create url
     NSString *URLString = [NSString stringWithFormat:
                            @"%@://%@/notifier_api/v2/notices",
                            (__useSSL ? @"https" : @"http"),
-                           ABNotifierHostName];
+                           EBNotifierHostName];
     NSURL *URL = [NSURL URLWithString:URLString];
     
 #if TARGET_OS_IPHONE
@@ -440,7 +440,7 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
         if ([delegate respondsToSelector:@selector(notifierDidPostNotices)]) {
             [delegate notifierDidPostNotices];
         }
-        [[NSNotificationCenter defaultCenter] postNotificationName:ABNotifierDidPostNoticesNotification object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:EBNotifierDidPostNoticesNotification object:self];
     });
 	
 }
@@ -456,11 +456,11 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
 	[request setHTTPMethod:@"POST"];
     
 	// get notice payload
-    ABNotice *notice = [ABNotice noticeWithContentsOfFile:path];
+    EBNotice *notice = [EBNotice noticeWithContentsOfFile:path];
 #ifdef DEBUG
     ABLog(@"%@", notice);
 #endif
-    NSString *XMLString = [notice hoptoadXMLString];
+    NSString *XMLString = [notice errbitXMLString];
     if (XMLString) {
         NSData *data = [XMLString dataUsingEncoding:NSUTF8StringEncoding];
         [request setHTTPBody:data];
@@ -530,17 +530,17 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
     @synchronized(self) {
         
         // free old cached value
-        free(ab_signal_info.user_data);
-        ab_signal_info.user_data_length = 0;
-        ab_signal_info.user_data = nil;
+        free(eb_signal_info.user_data);
+        eb_signal_info.user_data_length = 0;
+        eb_signal_info.user_data = nil;
         
         // cache new value
         if (__userData) {
             NSData *data = [NSKeyedArchiver archivedDataWithRootObject:__userData];
             unsigned long length = [data length];
-            ab_signal_info.user_data = malloc(length);
-            [data getBytes:ab_signal_info.user_data length:length];
-            ab_signal_info.user_data_length = length;
+            eb_signal_info.user_data = malloc(length);
+            [data getBytes:eb_signal_info.user_data length:length];
+            eb_signal_info.user_data_length = length;
         }
         
     }
@@ -554,7 +554,7 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
     NSAssert([paths count], @"No paths were provided");
     
     // get delegate
-    id<ABNotifierDelegate> delegate = [self delegate];
+    id<EBNotifierDelegate> delegate = [self delegate];
     
     // alert title
     NSString *title = nil;
@@ -571,7 +571,7 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
         body = [delegate bodyForNoticeAlert];
     }
     if (body == nil) {
-        body = [NSString stringWithFormat:ABLocalizedString(@"NOTICE_BODY"), ABNotifierApplicationName()];
+        body = [NSString stringWithFormat:ABLocalizedString(@"NOTICE_BODY"), EBNotifierApplicationName()];
     }
     
     // declare blocks
@@ -579,13 +579,13 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
         if ([delegate respondsToSelector:@selector(notifierDidDismissAlert)]) {
             [delegate notifierDidDismissAlert];
         }
-        [[NSNotificationCenter defaultCenter] postNotificationName:ABNotifierDidDismissAlertNotification object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:EBNotifierDidDismissAlertNotification object:self];
     };
     void (^delegatePresentBlock) (void) = ^{
         if ([delegate respondsToSelector:@selector(notifierWillDisplayAlert)]) {
             [delegate notifierWillDisplayAlert];
         }
-        [[NSNotificationCenter defaultCenter] postNotificationName:ABNotifierWillDisplayAlertNotification object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:EBNotifierWillDisplayAlertNotification object:self];
     };
     void (^postNoticesBlock) (void) = ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -600,7 +600,7 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
     };
     void (^setDefaultsBlock) (void) = ^{
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setBool:YES forKey:ABNotifierAlwaysSendKey];
+        [defaults setBool:YES forKey:EBNotifierAlwaysSendKey];
         [defaults synchronize];
     };
     
@@ -675,20 +675,20 @@ void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
 @end
 
 #pragma mark - reachability change
-void ABNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkReachabilityFlags flags, void *info) {
-    if ([ABNotifier isReachable:flags]) {
+void EBNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkReachabilityFlags flags, void *info) {
+    if ([EBNotifier isReachable:flags]) {
         static dispatch_once_t token;
         dispatch_once(&token, ^{
-            NSArray *paths = [ABNotifier pathsForAllNotices];
+            NSArray *paths = [EBNotifier pathsForAllNotices];
             if ([paths count]) {
-                if ([[NSUserDefaults standardUserDefaults] boolForKey:ABNotifierAlwaysSendKey] ||
+                if ([[NSUserDefaults standardUserDefaults] boolForKey:EBNotifierAlwaysSendKey] ||
                     !__displayPrompt) {
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                        [ABNotifier postNoticesWithPaths:paths];
+                        [EBNotifier postNoticesWithPaths:paths];
                     });
                 }
                 else {
-                    [ABNotifier showNoticeAlertForNoticesWithPaths:paths];
+                    [EBNotifier showNoticeAlertForNoticesWithPaths:paths];
                 }
             }
         });
