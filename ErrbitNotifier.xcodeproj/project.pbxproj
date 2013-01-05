@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		6149B6BB1697CA1C007D5DF7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6149B6BA1697CA1C007D5DF7 /* Foundation.framework */; };
-		6149B6C01697CA1C007D5DF7 /* ErrbitNotifier.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6149B6BF1697CA1C007D5DF7 /* ErrbitNotifier.h */; };
-		6149B6C21697CA1C007D5DF7 /* ErrbitNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 6149B6C11697CA1C007D5DF7 /* ErrbitNotifier.m */; };
 		6149B6E41697CA3D007D5DF7 /* GCAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6149B6CA1697CA3D007D5DF7 /* GCAlertView.m */; };
 		6149B6E51697CA3D007D5DF7 /* DDXMLElementAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6149B6CE1697CA3D007D5DF7 /* DDXMLElementAdditions.m */; };
 		6149B6E61697CA3D007D5DF7 /* NSString+DDXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 6149B6D11697CA3D007D5DF7 /* NSString+DDXML.m */; };
@@ -28,7 +26,6 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
-				6149B6C01697CA1C007D5DF7 /* ErrbitNotifier.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -38,8 +35,6 @@
 		6149B6B71697CA1C007D5DF7 /* libErrbitNotifier.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libErrbitNotifier.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6149B6BA1697CA1C007D5DF7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6149B6BE1697CA1C007D5DF7 /* ErrbitNotifier-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ErrbitNotifier-Prefix.pch"; sourceTree = "<group>"; };
-		6149B6BF1697CA1C007D5DF7 /* ErrbitNotifier.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ErrbitNotifier.h; sourceTree = "<group>"; };
-		6149B6C11697CA1C007D5DF7 /* ErrbitNotifier.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ErrbitNotifier.m; sourceTree = "<group>"; };
 		6149B6C91697CA3D007D5DF7 /* GCAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCAlertView.h; sourceTree = "<group>"; };
 		6149B6CA1697CA3D007D5DF7 /* GCAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCAlertView.m; sourceTree = "<group>"; };
 		6149B6CD1697CA3D007D5DF7 /* DDXMLElementAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLElementAdditions.h; sourceTree = "<group>"; };
@@ -107,8 +102,6 @@
 				6149B6C81697CA3D007D5DF7 /* gcalertview */,
 				6149B6CB1697CA3D007D5DF7 /* kissxml */,
 				6149B6DB1697CA3D007D5DF7 /* notifier */,
-				6149B6BF1697CA1C007D5DF7 /* ErrbitNotifier.h */,
-				6149B6C11697CA1C007D5DF7 /* ErrbitNotifier.m */,
 				6149B6BD1697CA1C007D5DF7 /* Supporting Files */,
 			);
 			path = ErrbitNotifier;
@@ -240,7 +233,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6149B6C21697CA1C007D5DF7 /* ErrbitNotifier.m in Sources */,
 				6149B6E41697CA3D007D5DF7 /* GCAlertView.m in Sources */,
 				6149B6E51697CA3D007D5DF7 /* DDXMLElementAdditions.m in Sources */,
 				6149B6E61697CA3D007D5DF7 /* NSString+DDXML.m in Sources */,
