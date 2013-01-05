@@ -31,7 +31,7 @@
  optional.
  
  */
-@protocol ABNotifierDelegate <NSObject>
+@protocol EBNotifierDelegate <NSObject>
 @optional
 
 /*

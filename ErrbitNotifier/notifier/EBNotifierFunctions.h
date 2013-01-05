@@ -35,26 +35,26 @@
  values. Returns a file descriptor to the file. Call this in handler functions.
  
  */
-int ABNotifierOpenNewNoticeFile(const char *path, int type);
+int EBNotifierOpenNewNoticeFile(const char *path, int type);
 
 // start handlers
-void ABNotifierStartExceptionHandler(void);
-void ABNotifierStartSignalHandler(void);
+void EBNotifierStartExceptionHandler(void);
+void EBNotifierStartSignalHandler(void);
 
 // stop handlers
-void ABNotifierStopExceptionHandler(void);
-void ABNotifierStopSignalHandler(void);
+void EBNotifierStopExceptionHandler(void);
+void EBNotifierStopSignalHandler(void);
 
 // get improved values from Info.plist
-NSString *ABNotifierApplicationVersion(void);
-NSString *ABNotifierApplicationName(void);
+NSString *EBNotifierApplicationVersion(void);
+NSString *EBNotifierApplicationName(void);
 
 /*
  
  Get the current operating system version.
  
  */
-NSString *ABNotifierOperatingSystemVersion(void);
+NSString *EBNotifierOperatingSystemVersion(void);
 
 /*
  
@@ -62,21 +62,21 @@ NSString *ABNotifierOperatingSystemVersion(void);
  "iPhone4,1" or "MacBookPro7,1".
  
  */
-NSString *ABNotifierMachineName(void);
+NSString *EBNotifierMachineName(void);
 
 /*
  
  Returns the common device name for iOS devices, e.g. "iPhone 4 (GSM)". Returns
- the value of `ABNotifierMachineName` for other products.
+ the value of `EBNotifierMachineName` for other products.
  
  */
-NSString *ABNotifierPlatformName(void);
+NSString *EBNotifierPlatformName(void);
 
 // Get the amount of resident memory in use in a formatted string.
-NSString *ABNotifierResidentMemoryUsage(void);
+NSString *EBNotifierResidentMemoryUsage(void);
 
 // Get the amount of virtual memory in use in a formatted string.
-NSString *ABNotifierVirtualMemoryUsage(void);
+NSString *EBNotifierVirtualMemoryUsage(void);
 
 /*
  
@@ -88,7 +88,7 @@ NSString *ABNotifierVirtualMemoryUsage(void);
  4 - address
  
  */
-NSArray *ABNotifierParseCallStack(NSArray *callStack);
+NSArray *EBNotifierParseCallStack(NSArray *callStack);
 
 /*
  
@@ -96,7 +96,7 @@ NSArray *ABNotifierParseCallStack(NSArray *callStack);
  the given executable name.
  
  */
-NSString *ABNotifierActionFromParsedCallStack(NSArray *callStack, NSString *executable);
+NSString *EBNotifierActionFromParsedCallStack(NSArray *callStack, NSString *executable);
 
 #if TARGET_OS_IPHONE
 /*
@@ -112,7 +112,7 @@ NSString *ABNotifierActionFromParsedCallStack(NSArray *callStack, NSString *exec
  
  
  */
-NSString *ABNotifierCurrentViewController(void);
+NSString *EBNotifierCurrentViewController(void);
 
 /*
  
@@ -126,12 +126,12 @@ NSString *ABNotifierCurrentViewController(void);
  This method must be called on the main thread.
  
  */
-NSString *ABNotifierVisibleViewControllerFromViewController(UIViewController *controller);
+NSString *EBNotifierVisibleViewControllerFromViewController(UIViewController *controller);
 #endif
 
 /*
  
- Get a localized string for the given key from the ABNotifier bundle
+ Get a localized string for the given key from the EBNotifier bundle
  
  */
 NSString* ABLocalizedString(NSString* key);

@@ -24,31 +24,31 @@
 
 #import <objc/runtime.h>
 
-#import "ABNotice.h"
-#import "ABNotifierFunctions.h"
+#import "EBNotice.h"
+#import "EBNotifierFunctions.h"
 
-#import "ABNotifier.h"
+#import "EBNotifier.h"
 
 #import "DDXML.h"
 
 // library constants
-NSString * const ABNotifierOperatingSystemVersionKey    = @"Operating System";
-NSString * const ABNotifierApplicationVersionKey        = @"Application Version";
-NSString * const ABNotifierPlatformNameKey              = @"Platform";
-NSString * const ABNotifierEnvironmentNameKey           = @"Environment Name";
-NSString * const ABNotifierBundleVersionKey             = @"Bundle Version";
-NSString * const ABNotifierExceptionNameKey             = @"Exception Name";
-NSString * const ABNotifierExceptionReasonKey           = @"Exception Reason";
-NSString * const ABNotifierCallStackKey                 = @"Call Stack";
-NSString * const ABNotifierControllerKey                = @"Controller";
-NSString * const ABNotifierExecutableKey                = @"Executable";
-NSString * const ABNotifierExceptionParametersKey       = @"Exception Parameters";
-NSString * const ABNotifierNoticePathExtension          = @"htnotice";
-const int ABNotifierNoticeVersion         = 5;
-const int ABNotifierSignalNoticeType      = 1;
-const int ABNotifierExceptionNoticeType   = 2;
+NSString * const EBNotifierOperatingSystemVersionKey    = @"Operating System";
+NSString * const EBNotifierApplicationVersionKey        = @"Application Version";
+NSString * const EBNotifierPlatformNameKey              = @"Platform";
+NSString * const EBNotifierEnvironmentNameKey           = @"Environment Name";
+NSString * const EBNotifierBundleVersionKey             = @"Bundle Version";
+NSString * const EBNotifierExceptionNameKey             = @"Exception Name";
+NSString * const EBNotifierExceptionReasonKey           = @"Exception Reason";
+NSString * const EBNotifierCallStackKey                 = @"Call Stack";
+NSString * const EBNotifierControllerKey                = @"Controller";
+NSString * const EBNotifierExecutableKey                = @"Executable";
+NSString * const EBNotifierExceptionParametersKey       = @"Exception Parameters";
+NSString * const EBNotifierNoticePathExtension          = @"htnotice";
+const int EBNotifierNoticeVersion         = 5;
+const int EBNotifierSignalNoticeType      = 1;
+const int EBNotifierExceptionNoticeType   = 2;
 
-@interface ABNotice ()
+@interface EBNotice ()
 @property (nonatomic, copy) NSString        *environmentName;
 @property (nonatomic, copy) NSString        *bundleVersion;
 @property (nonatomic, copy) NSString        *exceptionName;
@@ -61,7 +61,7 @@ const int ABNotifierExceptionNoticeType   = 2;
 @property (nonatomic, copy) NSDictionary    *environmentInfo;
 @end
 
-@implementation ABNotice
+@implementation EBNotice
 
 @synthesize noticeVersion = __noticeVersion;
 @synthesize environmentName = __environmentName;
@@ -81,7 +81,7 @@ const int ABNotifierExceptionNoticeType   = 2;
             
             // check path
             NSString *extension = [path pathExtension];
-            if (![extension isEqualToString:ABNotifierNoticePathExtension]) {
+            if (![extension isEqualToString:EBNotifierNoticePathExtension]) {
                 [NSException
                  raise:NSInvalidArgumentException
                  format:@"%@ is not a valid notice", path];
@@ -116,9 +116,9 @@ const int ABNotifierExceptionNoticeType   = 2;
             subdata = [data subdataWithRange:NSMakeRange(location, length)];
             location += length;
             dictionary = [NSKeyedUnarchiver unarchiveObjectWithData:subdata];
-            self.environmentName = [dictionary objectForKey:ABNotifierEnvironmentNameKey];
-            self.bundleVersion = [dictionary objectForKey:ABNotifierBundleVersionKey];
-            self.executable = [dictionary objectForKey:ABNotifierExecutableKey];
+            self.environmentName = [dictionary objectForKey:EBNotifierEnvironmentNameKey];
+            self.bundleVersion = [dictionary objectForKey:EBNotifierBundleVersionKey];
+            self.executable = [dictionary objectForKey:EBNotifierExecutableKey];
             
             // get user data
             [data getBytes:&length range:NSMakeRange(location, sizeof(unsigned long))];
@@ -128,7 +128,7 @@ const int ABNotifierExceptionNoticeType   = 2;
             self.environmentInfo = [NSKeyedUnarchiver unarchiveObjectWithData:subdata];
             
             // signal notice
-            if (type == ABNotifierSignalNoticeType) {
+            if (type == EBNotifierSignalNoticeType) {
                 
                 // signal
                 int signal;
@@ -158,28 +158,28 @@ const int ABNotifierExceptionNoticeType   = 2;
             }
             
             // exception notice
-            else if (type == ABNotifierExceptionNoticeType) {
+            else if (type == EBNotifierExceptionNoticeType) {
                 
                 // exception payload
                 [data getBytes:&length range:NSMakeRange(location, sizeof(unsigned long))];
                 location += sizeof(unsigned long);
                 subdata = [data subdataWithRange:NSMakeRange(location, length)];
                 dictionary = [NSKeyedUnarchiver unarchiveObjectWithData:subdata];
-                self.exceptionName = [dictionary objectForKey:ABNotifierExceptionNameKey];
-                self.exceptionReason = [dictionary objectForKey:ABNotifierExceptionReasonKey];
-                self.callStack = [dictionary objectForKey:ABNotifierCallStackKey];
-                self.controller = [dictionary objectForKey:ABNotifierControllerKey];
+                self.exceptionName = [dictionary objectForKey:EBNotifierExceptionNameKey];
+                self.exceptionReason = [dictionary objectForKey:EBNotifierExceptionReasonKey];
+                self.callStack = [dictionary objectForKey:EBNotifierCallStackKey];
+                self.controller = [dictionary objectForKey:EBNotifierControllerKey];
                 NSMutableDictionary *mutableInfo = [self.environmentInfo mutableCopy];
-                [mutableInfo addEntriesFromDictionary:[dictionary objectForKey:ABNotifierExceptionParametersKey]];
+                [mutableInfo addEntriesFromDictionary:[dictionary objectForKey:EBNotifierExceptionParametersKey]];
                 self.environmentInfo = mutableInfo;
                 [mutableInfo release];
                 
             }
             
             // finish up call stack stuff
-            self.callStack = ABNotifierParseCallStack(self.callStack);
-            self.action = ABNotifierActionFromParsedCallStack(self.callStack, self.executable);
-            if (type == ABNotifierSignalNoticeType && self.action != nil) {
+            self.callStack = EBNotifierParseCallStack(self.callStack);
+            self.action = EBNotifierActionFromParsedCallStack(self.callStack, self.executable);
+            if (type == EBNotifierSignalNoticeType && self.action != nil) {
                 self.exceptionReason = self.action;
             }
             
@@ -192,10 +192,10 @@ const int ABNotifierExceptionNoticeType   = 2;
     }
     return self;
 }
-+ (ABNotice *)noticeWithContentsOfFile:(NSString *)path {
-    return [[[ABNotice alloc] initWithContentsOfFile:path] autorelease];
++ (EBNotice *)noticeWithContentsOfFile:(NSString *)path {
+    return [[[EBNotice alloc] initWithContentsOfFile:path] autorelease];
 }
-- (NSString *)hoptoadXMLString {
+- (NSString *)errbitXMLString {
     
     // pool
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
@@ -205,15 +205,15 @@ const int ABNotifierExceptionNoticeType   = 2;
     [notice addAttribute:[DDXMLElement attributeWithName:@"version" stringValue:@"2.1"]];
     
     // set api key
-    NSString *APIKey = [ABNotifier APIKey];
+    NSString *APIKey = [EBNotifier APIKey];
     if (APIKey == nil) { APIKey = @""; }
     [notice addChild:[DDXMLElement elementWithName:@"api-key" stringValue:APIKey]];
     
     // set notifier information
     DDXMLElement *notifier = [DDXMLElement elementWithName:@"notifier"];
-    [notifier addChild:[DDXMLElement elementWithName:@"name" stringValue:@"Hoptoad iOS Notifier"]];
-    [notifier addChild:[DDXMLElement elementWithName:@"url" stringValue:@"http://github.com/guicocoa/hoptoad-ios"]];
-	[notifier addChild:[DDXMLElement elementWithName:@"version" stringValue:ABNotifierVersion]];
+    [notifier addChild:[DDXMLElement elementWithName:@"name" stringValue:@"Errbit iOS Notifier"]];
+    [notifier addChild:[DDXMLElement elementWithName:@"url" stringValue:@"http://github.com/guicocoa/errbit-ios"]];
+	[notifier addChild:[DDXMLElement elementWithName:@"version" stringValue:EBNotifierVersion]];
 	[notice addChild:notifier];
     
 	// set error information

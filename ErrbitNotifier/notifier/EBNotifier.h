@@ -38,10 +38,10 @@
     #error [Airbrake] unsupported platform
 #endif
 
-#import "ABNotifierDelegate.h"
+#import "EBNotifierDelegate.h"
 
 // notifier version
-extern NSString * const ABNotifierVersion;
+extern NSString * const EBNotifierVersion;
 
 /*
  
@@ -50,11 +50,11 @@ extern NSString * const ABNotifierVersion;
  presence of the DEBUG flag.
  
  */
-extern NSString * const ABNotifierDevelopmentEnvironment;
-extern NSString * const ABNotifierAdHocEnvironment;
-extern NSString * const ABNotifierAppStoreEnvironment;
-extern NSString * const ABNotifierReleaseEnvironment;
-extern NSString * const ABNotifierAutomaticEnvironment;
+extern NSString * const EBNotifierDevelopmentEnvironment;
+extern NSString * const EBNotifierAdHocEnvironment;
+extern NSString * const EBNotifierAppStoreEnvironment;
+extern NSString * const EBNotifierReleaseEnvironment;
+extern NSString * const EBNotifierAutomaticEnvironment;
 
 /*
  
@@ -64,10 +64,10 @@ extern NSString * const ABNotifierAutomaticEnvironment;
  after the associated delegate method is called.
  
  */
-extern NSString * const ABNotifierWillDisplayAlertNotification;
-extern NSString * const ABNotifierDidDismissAlertNotification;
-extern NSString * const ABNotifierWillPostNoticesNotification;
-extern NSString * const ABNotifierDidPostNoticesNotification;
+extern NSString * const EBNotifierWillDisplayAlertNotification;
+extern NSString * const EBNotifierDidDismissAlertNotification;
+extern NSString * const EBNotifierWillPostNoticesNotification;
+extern NSString * const EBNotifierDidPostNoticesNotification;
 
 /*
  
@@ -75,7 +75,7 @@ extern NSString * const ABNotifierDidPostNoticesNotification;
  calling `startNotifierWithAPIKey:environmentName:`.
  
  */
-@interface ABNotifier : NSObject
+@interface EBNotifier : NSObject
 
 /*
  
@@ -96,17 +96,17 @@ extern NSString * const ABNotifierDidPostNoticesNotification;
 + (void)startNotifierWithAPIKey:(NSString *)key
                 environmentName:(NSString *)name
                          useSSL:(BOOL)useSSL
-                       delegate:(id<ABNotifierDelegate>)delegate;
+                       delegate:(id<EBNotifierDelegate>)delegate;
 + (void)startNotifierWithAPIKey:(NSString *)key
                 environmentName:(NSString *)name
                          useSSL:(BOOL)useSSL
-                       delegate:(id<ABNotifierDelegate>)delegate
+                       delegate:(id<EBNotifierDelegate>)delegate
         installExceptionHandler:(BOOL)exception
            installSignalHandler:(BOOL)signal;
 + (void)startNotifierWithAPIKey:(NSString *)key
                 environmentName:(NSString *)name
                          useSSL:(BOOL)useSSL
-                       delegate:(id<ABNotifierDelegate>)delegate
+                       delegate:(id<EBNotifierDelegate>)delegate
         installExceptionHandler:(BOOL)exception
            installSignalHandler:(BOOL)signal
               displayUserPrompt:(BOOL)display;
@@ -116,7 +116,7 @@ extern NSString * const ABNotifierDidPostNoticesNotification;
  Methods to expose some variables used by the notifier.
  
  */
-+ (id<ABNotifierDelegate>)delegate;
++ (id<EBNotifierDelegate>)delegate;
 + (NSString *)APIKey;
 
 /*
