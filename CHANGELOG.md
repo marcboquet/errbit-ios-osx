@@ -1,4 +1,11 @@
-# Airbrake iOS Notifier Changelog
+# Errbit iOS Notifier Changelog
+
+## 3.2
+
+- renamed all classes, statics, etc, to use EBN instead of ABN
+- converted to using ARC
+- added support for customer server addresses
+- removed support for OS X
 
 ## 3.1
 
