@@ -331,9 +331,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ErrbitNotifier/ErrbitNotifier-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
-				PRIVATE_HEADERS_FOLDER_PATH = "../../Headers/errbit-ios/Private";
+				PRIVATE_HEADERS_FOLDER_PATH = ../../Headers/ErrbitNotifier/Private;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "../../Headers/errbit-ios";
+				PUBLIC_HEADERS_FOLDER_PATH = ../../Headers/ErrbitNotifier;
 				SKIP_INSTALL = YES;
 				SYMROOT = "$(SRCROOT)/Build/Products";
 			};
@@ -347,9 +347,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ErrbitNotifier/ErrbitNotifier-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
-				PRIVATE_HEADERS_FOLDER_PATH = "../../Headers/errbit-ios/Private";
+				PRIVATE_HEADERS_FOLDER_PATH = ../../Headers/ErrbitNotifier/Private;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "../../Headers/errbit-ios";
+				PUBLIC_HEADERS_FOLDER_PATH = ../../Headers/ErrbitNotifier;
 				SKIP_INSTALL = YES;
 				SYMROOT = "$(SRCROOT)/Build/Products";
 			};
