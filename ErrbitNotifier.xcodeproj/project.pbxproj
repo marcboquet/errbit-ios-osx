@@ -330,7 +330,10 @@
 				DSTROOT = /tmp/ErrbitNotifier.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ErrbitNotifier/ErrbitNotifier-Prefix.pch";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRIVATE_HEADERS_FOLDER_PATH = ../../Headers/ErrbitNotifier/Private;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = ../../Headers/ErrbitNotifier;
@@ -346,7 +349,10 @@
 				DSTROOT = /tmp/ErrbitNotifier.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ErrbitNotifier/ErrbitNotifier-Prefix.pch";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRIVATE_HEADERS_FOLDER_PATH = ../../Headers/ErrbitNotifier/Private;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = ../../Headers/ErrbitNotifier;
