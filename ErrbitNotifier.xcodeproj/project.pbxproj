@@ -51,7 +51,6 @@
 		6149B6DA1697CA3D007D5DF7 /* DDXMLPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLPrivate.h; sourceTree = "<group>"; };
 		6149B6DC1697CA3D007D5DF7 /* EBNotice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBNotice.h; sourceTree = "<group>"; };
 		6149B6DD1697CA3D007D5DF7 /* EBNotice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBNotice.m; sourceTree = "<group>"; };
-		6149B6DE1697CA3D007D5DF7 /* EBNotifier.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = EBNotifier.bundle; sourceTree = "<group>"; };
 		6149B6DF1697CA3D007D5DF7 /* EBNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBNotifier.h; sourceTree = "<group>"; };
 		6149B6E01697CA3D007D5DF7 /* EBNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBNotifier.m; sourceTree = "<group>"; };
 		6149B6E11697CA3D007D5DF7 /* EBNotifierDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBNotifierDelegate.h; sourceTree = "<group>"; };
@@ -172,7 +171,6 @@
 			children = (
 				6149B6DC1697CA3D007D5DF7 /* EBNotice.h */,
 				6149B6DD1697CA3D007D5DF7 /* EBNotice.m */,
-				6149B6DE1697CA3D007D5DF7 /* EBNotifier.bundle */,
 				6149B6DF1697CA3D007D5DF7 /* EBNotifier.h */,
 				6149B6E01697CA3D007D5DF7 /* EBNotifier.m */,
 				6149B6E11697CA3D007D5DF7 /* EBNotifierDelegate.h */,
