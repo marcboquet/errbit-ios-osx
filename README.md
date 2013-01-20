@@ -28,7 +28,22 @@ In order for the call stack to be properly symbolicated at the time of a crash, 
 - Strip Linked Product: Off
 
 # Installation
-Working on detailed install instructions.
+
+These instructions written using Xcode 4.4+.
+
+1) Drag the project file into your project.
+2) Under Project -> Build Phases -> Target Dependencies, add "ErrbitNotifier"
+3) Under Project -> Build Phases -> Link Binary With Libraries, add "libErrbitNotifier.a", "libxml2.dylib", and "SystemConfiguration.framework"
+4) Under Project -> Build Settings -> Header Search Paths, add "$(BUILT_PRODUCTS_DIR)/../../Headers" (with quotes)
+5) Under Project -> Build Settings -> Other Linker Flags, add -ObjC and -all_load
+6) Add the following to your Localizable.strings file as well as any localized versions you want
+````objc
+"NOTICE_TITLE" = "Crash Report";
+"NOTICE_BODY" = "%@ has detected unreported crashes, would you like to send a report to the developer?";
+"SEND" = "Send";
+"DONT_SEND" = "Don't Send";
+"ALWAYS_SEND" = "Always Send";
+````
     
 # Running The Notifier
 
@@ -37,15 +52,15 @@ The `EBNotifier` class is the primary class you will interact with while using t
 To run the notifier you only need to complete two steps. First, import the `EBNotifier` header file in your app delegate
 
 ````objc
-#import <ErrbitNotifier/EBNotifer.h>
+#import <ErrbitNotifier/EBNotifier.h>
 ````
     
 Next, call the start notifier method at the very beginning of your `application:didFinishLaunchingWithOptions:`
 
 ````objective-c
 [EBNotifier startNotifierWithAPIKey:@"key"
-                         serverName:@"errbit.server.com"
-                    environmentName:ABNotifierAutomaticEnvironment
+                      serverAddress:@"errbit.server.com"
+                    environmentName:EBNotifierAutomaticEnvironment
                              useSSL:YES // only if your account supports it
                            delegate:self];
 ````
