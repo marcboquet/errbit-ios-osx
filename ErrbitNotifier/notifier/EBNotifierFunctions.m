@@ -364,11 +364,5 @@ NSString *EBNotifierVisibleViewControllerFromViewController(UIViewController *co
 #pragma mark - localization
 
 NSString *EBLocalizedString(NSString* key) {
-  static NSBundle *bundle = nil;
-  static dispatch_once_t token;
-  dispatch_once(&token, ^{
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"EBNotifier" ofType:@"bundle"];
-      bundle = [[NSBundle alloc] initWithPath:path];
-  });
-  return [bundle localizedStringForKey:key value:key table:nil];
+  return [[NSBundle mainBundle] localizedStringForKey:key value:key table:nil];
 }
