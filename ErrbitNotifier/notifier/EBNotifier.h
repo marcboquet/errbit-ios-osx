@@ -24,7 +24,11 @@
 
 #import <TargetConditionals.h>
 #import <SystemConfiguration/SystemConfiguration.h>
+#if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
+#else
+#import <Foundation/Foundation.h>
+#endif
 
 #ifndef __IPHONE_4_0
   #error This version of the Airbrake notifier requires iOS 6.0 or later

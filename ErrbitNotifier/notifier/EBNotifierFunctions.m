@@ -311,6 +311,8 @@ NSString *EBNotifierVirtualMemoryUsage(void) {
   }
 }
 
+#if TARGET_OS_IPHONE
+
 #pragma mark - view controller
 NSString *EBNotifierCurrentViewController(void) {
     
@@ -360,6 +362,8 @@ NSString *EBNotifierVisibleViewControllerFromViewController(UIViewController *co
     return NSStringFromClass([controller class]);
 	}
 }
+
+#endif
 
 #pragma mark - localization
 
