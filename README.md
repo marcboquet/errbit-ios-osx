@@ -31,12 +31,13 @@ In order for the call stack to be properly symbolicated at the time of a crash, 
 
 These instructions written using Xcode 4.4+.
 
-1) Drag the project file into your project.
-2) Under Project -> Build Phases -> Target Dependencies, add "ErrbitNotifier"
-3) Under Project -> Build Phases -> Link Binary With Libraries, add "libErrbitNotifier.a", "libxml2.dylib", and "SystemConfiguration.framework"
-4) Under Project -> Build Settings -> Header Search Paths, add "$(BUILT_PRODUCTS_DIR)/../../Headers" (with quotes)
-5) Under Project -> Build Settings -> Other Linker Flags, add -ObjC and -all_load
-6) Add the following to your Localizable.strings file as well as any localized versions you want
+1. Drag the project file into your project.
+2. Under Project -> Build Phases -> Target Dependencies, add "ErrbitNotifier"
+3. Under Project -> Build Phases -> Link Binary With Libraries, add "libErrbitNotifier.a", "libxml2.dylib", and "SystemConfiguration.framework"
+4. Under Project -> Build Settings -> Header Search Paths, add "$(BUILT_PRODUCTS_DIR)/../../Headers" (with quotes)
+5. Under Project -> Build Settings -> Other Linker Flags, add -ObjC and -all_load
+6. Add the following to your Localizable.strings file as well as any localized versions you want
+
 ````objc
 "NOTICE_TITLE" = "Crash Report";
 "NOTICE_BODY" = "%@ has detected unreported crashes, would you like to send a report to the developer?";
@@ -44,7 +45,7 @@ These instructions written using Xcode 4.4+.
 "DONT_SEND" = "Don't Send";
 "ALWAYS_SEND" = "Always Send";
 ````
-    
+
 # Running The Notifier
 
 The `EBNotifier` class is the primary class you will interact with while using the notifier. All of its methods and properties, along with the `EBNotifierDelegate` protocol are documented in their headers. **Please read through the header files for a complete reference of the library.**
@@ -54,7 +55,7 @@ To run the notifier you only need to complete two steps. First, import the `EBNo
 ````objc
 #import <ErrbitNotifier/EBNotifier.h>
 ````
-    
+
 Next, call the start notifier method at the very beginning of your `application:didFinishLaunchingWithOptions:`
 
 ````objective-c
@@ -118,7 +119,7 @@ The `EBNotifierDelegate` protocol allows you to respond to actions going on insi
 
 ````objective-c
 @implementation MyAppDelegate
-  
+
 // your other methods
 
 #pragma mark - notifier delegate
@@ -139,7 +140,7 @@ The `EBNotifierDelegate` protocol allows you to respond to actions going on insi
 - (NSString *)bodyForNoticeAlert {
   return @"MyApp has detected unreported crashes, would you like to send a report to the developer?";
 }
-  
+
 @end
 ````
 
