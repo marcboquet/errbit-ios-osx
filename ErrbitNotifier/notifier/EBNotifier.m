@@ -24,8 +24,12 @@
 
 #import "EBNotice.h"
 #import "EBNotifierFunctions.h"
+
 #import "EBNotifier.h"
+
+#if TARGET_OS_IPHONE
 #import "GCAlertView.h"
+#endif
 
 // internal
 static SCNetworkReachabilityRef __reachability = nil;
@@ -267,7 +271,9 @@ void EBNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
                                     [exception reason], EBNotifierExceptionReasonKey,
                                     [exception callStackSymbols], EBNotifierCallStackKey,
                                     exceptionParameters, EBNotifierExceptionParametersKey,
+#if TARGET_OS_IPHONE
                                     EBNotifierCurrentViewController(), EBNotifierControllerKey,
+#endif
                                     nil];
 
       NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dictionary];
@@ -290,6 +296,8 @@ void EBNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
     @finally {
       close(fd);
     }
+  } else {
+    EBLog(@"Error reading notice file: %@", path);
   }
 }
 
@@ -424,7 +432,8 @@ void EBNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
                                                    (__useSSL ? @"https" : @"http"),
                                                    __hostName];
   NSURL *URL = [NSURL URLWithString:URLString];
-    
+
+#if TARGET_OS_IPHONE
   // start background task
   __block BOOL keepPosting = YES;
   UIApplication *app = [UIApplication sharedApplication];
@@ -445,6 +454,12 @@ void EBNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
   if (task != UIBackgroundTaskInvalid) {
     [app endBackgroundTask:task];
   }
+#else
+    // report each notice
+    [paths enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [self postNoticeWithContentsOfFile:obj toURL:URL];
+    }];      
+#endif
 
   // notify people
   dispatch_sync(dispatch_get_main_queue(), ^{
@@ -617,6 +632,7 @@ void EBNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
     [defaults synchronize];
   };
 
+#if TARGET_OS_IPHONE
   GCAlertView *alert = [[GCAlertView alloc] initWithTitle:title message:body];
   [alert addButtonWithTitle:EBLocalizedString(@"ALWAYS_SEND") block:^{
     setDefaultsBlock();
@@ -629,6 +645,7 @@ void EBNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
   [alert setDidDismissBlock:delegatePresentBlock];
   [alert setCancelButtonIndex:2];
   [alert show];
+#endif
 }
 
 #pragma mark - reachability
