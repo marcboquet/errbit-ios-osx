@@ -420,13 +420,14 @@ void EBNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
   id<EBNotifierDelegate> delegate = [EBNotifier delegate];
     
   // notify people
-  dispatch_sync(dispatch_get_main_queue(), ^{
+  // https://github.com/foundationkit/FoundationKit/blob/master/Sources/NSNotificationCenter+FKMainThread.m
+  dispatch_async(dispatch_get_main_queue(), ^{
     if ([delegate respondsToSelector:@selector(notifierWillPostNotices)]) {
       [delegate notifierWillPostNotices];
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:EBNotifierWillPostNoticesNotification object:self];
   });
-    
+
   // create url
   NSString *URLString = [NSString stringWithFormat:@"%@://%@/notifier_api/v2/notices",
                                                    (__useSSL ? @"https" : @"http"),
@@ -462,7 +463,7 @@ void EBNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
 #endif
 
   // notify people
-  dispatch_sync(dispatch_get_main_queue(), ^{
+  dispatch_async(dispatch_get_main_queue(), ^{
     if ([delegate respondsToSelector:@selector(notifierDidPostNotices)]) {
       [delegate notifierDidPostNotices];
     }
