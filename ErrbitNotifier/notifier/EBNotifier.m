@@ -151,7 +151,7 @@ void EBNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
       __delegate = delegate;
       __useSSL = useSSL;
       __displayPrompt = display;
-      __hostName = server;
+      __hostName = [server retain];
 
       // switch on api key
       if ([key length]) {
