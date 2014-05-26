@@ -46,6 +46,8 @@ These instructions written using Xcode 4.4+.
 "ALWAYS_SEND" = "Always Send";
 ````
 
+# Installation Using CocoaPods
+
 # Running The Notifier
 
 The `EBNotifier` class is the primary class you will interact with while using the notifier. All of its methods and properties, along with the `EBNotifierDelegate` protocol are documented in their headers. **Please read through the header files for a complete reference of the library.**
@@ -98,6 +100,12 @@ To test that the notifier is working inside your application, a simple test meth
 ````
 
 If you use the `DEBUG` macro to signify development builds the notifier will log notices and errors to the console as they are reported to help see more details.
+
+Here are some information when trying to understand how this library works:
+
+* `~/Library/DiagnosticReports/` is where all crash reports are stored
+* `~/Library/Application Support/YOURAPP/Errbit Notices` are where your Errbit notices are stored before they are sent to the server. You can get to this path programmtically via `[EBNotifier pathForNoticesDirectory]`
+* Will force all notices to be posted `[[EBNotifier postNoticesWithPaths:[EBNotifier pathsForAllNotices]]`
 
 #Implementing the Delegate Protocol
 
