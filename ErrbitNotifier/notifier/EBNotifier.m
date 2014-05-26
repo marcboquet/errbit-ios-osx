@@ -346,7 +346,9 @@ void EBNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
 + (NSString *)pathForNoticesDirectory {
   static NSString *path = nil;
   static dispatch_once_t token;
+
   dispatch_once(&token, ^{
+#if TARGET_OS_IPHONE
     NSArray *folders = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
     path = [folders objectAtIndex:0];
     if ([folders count] == 0) {
@@ -354,6 +356,17 @@ void EBNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
     } else {
       path = [path stringByAppendingPathComponent:@"Errbit Notices"];
     }
+#else
+    NSArray *folders = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    path = [folders objectAtIndex:0];
+    if ([folders count] == 0) {
+        path = NSTemporaryDirectory();
+    }
+    else {
+        path = [path stringByAppendingPathComponent:EBNotifierApplicationName()];
+        path = [path stringByAppendingPathComponent:@"Errbit Notices"];
+    }
+#endif
     NSFileManager *manager = [NSFileManager defaultManager];
     if (![manager fileExistsAtPath:path]) {
       [manager createDirectoryAtPath:path
@@ -361,7 +374,10 @@ void EBNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
                           attributes:nil
                                error:nil];
     }
+
+    [path retain];
   });
+
   return path;
 }
 
