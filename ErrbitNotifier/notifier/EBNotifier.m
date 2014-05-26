@@ -469,25 +469,24 @@ void EBNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:EBNotifierDidPostNoticesNotification object:self];
   });
-	
 }
 
 + (void)postNoticeWithContentsOfFile:(NSString *)path toURL:(NSURL *)URL {
-    
+  EBLog(@"Going to send notice");
+
   // assert
   NSAssert(![NSThread isMainThread], @"This method must not be called on the main thread");
     
   // create url request
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
-	[request setTimeoutInterval:10.0];
+	[request setTimeoutInterval: 60.0];
 	[request setValue:@"text/xml" forHTTPHeaderField:@"Content-Type"];
 	[request setHTTPMethod:@"POST"];
     
 	// get notice payload
   EBNotice *notice = [EBNotice noticeWithContentsOfFile:path];
-
 #ifdef DEBUG
-    EBLog(@"%@", notice);
+    EBLog(@"Notice %@ for path %@", notice, path);
 #endif
 
   NSString *XMLString = [notice errbitXMLString];
@@ -647,6 +646,8 @@ void EBNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
   [alert setCancelButtonIndex:2];
   [alert show];
 #endif
+
+  // TODO OS X option not implemented
 }
 
 #pragma mark - reachability
@@ -676,14 +677,20 @@ void EBNotifierReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkR
     static dispatch_once_t token;
     dispatch_once(&token, ^{
       NSArray *paths = [EBNotifier pathsForAllNotices];
+
       if ([paths count]) {
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:EBNotifierAlwaysSendKey] ||
-              !__displayPrompt) {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:EBNotifierAlwaysSendKey] || !__displayPrompt) {
           dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [EBNotifier postNoticesWithPaths:paths];
           });
         } else {
+          // TODO need to implement OS X version of the alert
+
+#if TARGET_OS_IPHONE
           [EBNotifier showNoticeAlertForNoticesWithPaths:paths];
+#else
+          [EBNotifier postNoticesWithPaths:paths];
+#endif
         }
       }
     });
