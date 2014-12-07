@@ -46,13 +46,13 @@ static NSString *GCAlertViewDidDismissKey = @"GCAlertViewDidDismissAction";
     if ([actions objectForKey:title]) { return; }
     [self addButtonWithTitle:title];
     if (block) {
-        void (^action) () = block;
+        void (^action) () = [block copy];
         [actions setObject:action forKey:title];
     }
 }
 - (void)setWillPresentBlock:(void (^) (void))block {
     if (block) {
-        void (^action) () = block;
+        void (^action) () = [block copy];
         [actions setObject:action forKey:GCAlertViewWillPresentKey];
     }
     else {
@@ -61,7 +61,7 @@ static NSString *GCAlertViewDidDismissKey = @"GCAlertViewDidDismissAction";
 }
 - (void)setDidPresentBlock:(void (^) (void))block {
     if (block) {
-        void (^action) () = block;
+        void (^action) () = [block copy];
         [actions setObject:action forKey:GCAlertViewDidPresentKey];
     }
     else {
@@ -70,7 +70,7 @@ static NSString *GCAlertViewDidDismissKey = @"GCAlertViewDidDismissAction";
 }
 - (void)setWillDismissBlock:(void (^) (void))block {
     if (block) {
-        void (^action) () = block;
+        void (^action) () = [block copy];
         [actions setObject:action forKey:GCAlertViewWillDismissKey];
     }
     else {
@@ -79,7 +79,7 @@ static NSString *GCAlertViewDidDismissKey = @"GCAlertViewDidDismissAction";
 }
 - (void)setDidDismissBlock:(void (^) (void))block {
     if (block) {
-        void (^action) () = block;
+        void (^action) () = [block copy];
         [actions setObject:action forKey:GCAlertViewDidDismissKey];
     }
     else {
